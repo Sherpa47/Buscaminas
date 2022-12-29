@@ -98,13 +98,13 @@ input.custom_input {
 
 #custom_random {
   margin-bottom: 70px;
-  font-size: 20px;
+  font-size: 12px;
   background: orange;
 }
 
 #custom_start {
   margin-bottom: 40px;
-  font-size: 20px;
+  font-size: 12px;
   border-radius: 10%;
   color: black;
   -webkit-text-stroke: 1px white;
