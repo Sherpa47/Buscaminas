@@ -113,6 +113,7 @@ input.custom_input {
 span.status_text {
   font-size: 25px;
   margin-right: 25px;
+  color: white;
 }
 
 #restart_game {
