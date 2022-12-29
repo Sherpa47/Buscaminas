@@ -4,6 +4,12 @@ body {
   background: #222222;
 }
 
+
+imagen {
+  width: 147px;
+  height: 50px;
+}
+
 #title_text {
   margin-top: 50px;
   margin-bottom: 100px;
