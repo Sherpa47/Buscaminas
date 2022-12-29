@@ -24,6 +24,13 @@ img {
   color: white;
 }
 
+#title_author {
+  font-size: 30px;
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 4px;
+}
+
 #difficulty_parent {
   position: absolute;
   top: 300px;
