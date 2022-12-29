@@ -3,45 +3,27 @@ font-family: sans-serif;
 text-align: center;
 overflow-x: scroll;
 }
-
 button{
 position: relative;
 background-color: white;
 }
-
 hr{
 border-color: black;
 }
-
 #go, #newField, #darktheme, #flag{
-	height:	auto;
-	width: 80px;
+	height:	25px;
+	width: 180px;
 	border-color: black;
 	border-width: 2px;
 }
-
 button{
-width: 25px;
-height: 25px;
-font-size: 0.5em;
+width: 30px;
+height: 30px;
 }
-
 #wrapper{
 
 white-space: nowrap;
 }
-
 p{
-  font-size: 0.5em;
-  font-weight: bold;
-}
-
-h1{
-  font-size: 1.1em;
-  font-weight: bold;
-}
-
-b{
-  font-size: 0.6em;
   font-weight: bold;
 }
