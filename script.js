@@ -1,425 +1,315 @@
-/* THIS CODE IN A NUTSHELL:
-
-+ When you start game, generate field based on user's
-request, and generate random mine numbers all in 1 function.
-
-+ When a square clicked, check to see if the flag button
-is on, (if it is, then flag the square), and check the 
-squares around it for mines. I use a different algorithm
-for the sides.
-
-+ When the function has checked to see if there are any 
-mines around it, activate the color function to color
-the square based on the number for easier reading.
-
-FUTURE CHANGES:
-I'm thinking of running a loop to evaluate all the squares
-for mines on the map rather than just evaluating squares
-once you click on it. This will help with the logic of
-opening all the squares with 0 if you click it.
-
-*/
-
-document.getElementById("flag").addEventListener("click",flagByAlert);
-document.getElementById("darktheme").addEventListener("click",lightsoff);
-var darktheme = false; // Self explanatory: declares wether or not dark theme (Or high contrast) is on
-var userinput; // The number of rows / columns to be genetrated
-var totalmines; // Contains the number of mines (based on user's request)
-var minenumbers = []; //Contains a list of all the mines
-var preminenumbers = []; // Contains a list of all the id numbers in the field
-var a = 0; // Used to asign id numbers to generated buttons
-var loop1 = 0; // Loop1 is for generating buttons
-var loop2 = 0; // Loop2 is for generating a break (or new row)
-var loop3 = 0; // Loop3 is for removing the buttons before they are generated again
-var loop4 = 0; // Loop4 is for generating mine numbers
-var loop5 = 0; // Loop5 is for checking to see if a duplicate mine number exists
-var loop6 = 0; // Loop6 is for defining the sides of the field
-var checkmines = 0; // Checkmines is for detecting mine hits
-var attribute = 0; // A variable that contains the button that called the function
-var minesAround = 0; //How many mines around a number
-var squares = 0;
-var flag = false;
-document.getElementById("minesinput").value = 15; //Default mines number
-document.getElementById("userinput").value = 10; //Default field layout
-document.getElementById("go").addEventListener("click",render);
-
-function render() {
-userinput = document.getElementById("userinput").value;
-totalmines = document.getElementById("minesinput").value;
-if(totalmines < 1 || totalmines >= eval(userinput) * eval(userinput))
-{alert("Error: Number of mines is either below 1 or more than or equal to the number of rows/columns");
-console.log("The minimum number of mines is 1. The number of mines also can't be greater than or equal to the number of rows/columns squared");}
-else if( eval(userinput) < 5)
-{alert("Error: Number of rows and columns is less that 5");
-console.log("The minimum of rows and columns is 5");}
-else{
-//RENDER CODE HERE
-a = 0;
-loop1 = 0;
-loop2 = 0;
-loop3 = 0;
-loop4 = 0;
-loop5 = 0;
-loop6 = 0;
-preminenumbers = [];
-minenumbers = [];
-while (loop1 < eval(userinput)){
-while (loop2 < eval(userinput)){
-var elm = document.createElement('button');
-elm.setAttribute('id', a);
-document.getElementById("wrapper").appendChild(elm);
-document.getElementById(a).addEventListener("click",check);
-document.getElementById(a).innerHTML = "+";
-document.getElementById(a).style.color = "gray";
-document.getElementById(a).style.backgroundColor = "gray";
-loop2++;
-a++;
-}
-loop1++;
-var div2 = document.createElement('br');
-document.getElementById("wrapper").appendChild(div2);
-loop2 = 0;
-}
-document.getElementById("go").innerHTML = "Generate New Minefield";
-document.getElementById("go").id = "newField";
-  document.getElementById("newField").addEventListener("click",reset);
-while (loop4 < eval(userinput) * eval(userinput)) {
-	preminenumbers.push(loop4);
-	loop4++;
-	}
-while (loop5 < totalmines) {
-	var ran = Math.floor(Math.random() * preminenumbers.length);
-	if(preminenumbers[ran] !== undefined){minenumbers.push(ran); delete preminenumbers[ran]; loop5++;}else{}
-	}
-}
-for (loop6 = 0; loop6 < userinput*userinput; loop6++){
-if (loop6%userinput == 0){
-document.getElementById(loop6).class = "side";
-}else if(loop6 < userinput){
-document.getElementById(loop6).class = "side";
-}else if (loop6 > userinput*userinput-userinput){
-document.getElementById(loop6).class = "side";
-}else if ((loop6+1)%userinput == 0){ 
-document.getElementById(loop6).class = "side";
-}
-}
-}
-//document.getElementById("wrapper").style.paddingLeft = (userinput*userinput)+"px";
-//document.getElementById("wrapper").style.paddingTop = (userinput*userinput)+"px";
-a = 0;
-function reset() {
-$("button").not(document.getElementsByClassName("stationary")).remove();
-$("br").not(document.getElementsByClassName("st")).remove();
-document.getElementById("newField").id = "go";
-render();
-squares = 0;
-}
-
-function check(){ //This function checks if you clicked a mine
-attribute = $(this).attr("id"); // jQuery finds out which button activated the function and returns the ID
-if(flag == true){
-document.getElementById(attribute).innerHTML = "X"
-document.getElementById(attribute).style.fontWeight = "bold";
-document.getElementById(attribute).style.color = "red";
-document.getElementById(attribute).style.backgroundColor = "orange";
-}else{
-checkmines = 0;
-while (checkmines < minenumbers.length){
-if( $(this).attr("id") == minenumbers[checkmines]){
-	showmines();
-	break;
-	}
-	checkmines++;
-}
-if (checkmines == minenumbers.length) {open();}
-}
-}
-function open() {
-if(document.getElementById(attribute).innerHTML == "X"){
-  document.getElementById(attribute).innerHTML = "+";
-  document.getElementById(attribute).style.color = "white";
-  document.getElementById(attribute).style.backgroundColor = "white";
-}else{
-squares = 0;
-attribute = eval(attribute);
-userinput = eval(userinput);
-var x = 0;
-minesAround = 0;
-var Mr = attribute+1;
-var Tr = (attribute - userinput)+1;
-var Tm = attribute - userinput;
-var Tl = attribute - (userinput+1);
-var Ml = attribute - 1;
-var Bl = attribute + (userinput-1);
-var Bm = attribute + userinput;
-var Br = attribute + (userinput+1);
-if (document.getElementById(attribute).class != "side"){
-while ( x < minenumbers.length){
-	if (Mr == minenumbers[x]){ //Middle Right
-	minesAround++;
-	}
-	if (Tr == minenumbers[x]){ //Top Right
-	minesAround++;
-	}
-	if (Tm == minenumbers[x]){ //Top Middle
-	minesAround++;
-	}
-	if (Tl == minenumbers[x]){ //Top Left
-	minesAround++;
-	}
-	if (Ml == minenumbers[x]){ //Middle Left
-	minesAround++;
-	}
-	if (Bl == minenumbers[x]){ //Bottom Left
-	minesAround++;
-	}
-	if (Bm == minenumbers[x]){ //Bottom Middle
-	minesAround++;
-	}
-	if (Br == minenumbers[x]){ //Bottom Right
-	minesAround++;
-	}
-	x++;
-}
-document.getElementById(attribute).innerHTML = minesAround;
-color();
-}else if (attribute == 0) { // Top Left Corner Of Map
-while (x < minenumbers.length){
-	if (Mr == minenumbers[x]){ //Middle Right
-	minesAround++;
-	}
-	if (Bm == minenumbers[x]){ //Bottom Middle
-	minesAround++;
-	}
-	if (Br == minenumbers[x]){ //Bottom Right
-	minesAround++;
-	}
-	x++;
-}
-document.getElementById(attribute).innerHTML = minesAround;
-color();
-}else if (attribute == (userinput-1)) {
-while (x < minenumbers.length){
-	if (Ml == minenumbers[x]){ //Middle Left
-	minesAround++;
-	}
-	if (Bl == minenumbers[x]){ //Bottom Left
-	minesAround++;
-	}
-	if (Bm == minenumbers[x]){ //Bottom Middle
-	minesAround++;
-	}
-	x++;
-}
-document.getElementById(attribute).innerHTML = minesAround;
-color();}
-else if(attribute == ((userinput*userinput)-userinput)){
-while (x < minenumbers.length){
-	if (Mr == minenumbers[x]){ //Middle Right
-	minesAround++;
-	}
-	if (Tr	== minenumbers[x]){ //Top Right
-	minesAround++;
-	}
-	if (Tm == minenumbers[x]){ //Top Middle
-	minesAround++;
-	}
-	x++;
-}
-document.getElementById(attribute).innerHTML = minesAround;
-color();
-}else if(attribute == ((userinput*userinput)-1)){
-while(x < minenumbers.length){
-	if (Tm == minenumbers[x]){ //Top Middle
-	minesAround++;
-	}
-	if (Tl == minenumbers[x]){ //Top Left
-	minesAround++;
-	}
-	if (Ml == minenumbers[x]){ //Middle Left
-	minesAround++;
-	}
-	x++;
-}
-document.getElementById(attribute).innerHTML = minesAround;
-document.getElementById(attribute).style.backgroundColor = "white";
-color();
-}else if(attribute%userinput == 0){
-while(x < minenumbers.length){
-	if (Mr == minenumbers[x]){ //Middle Right
-	minesAround++;
-	}
-	if (Tr == minenumbers[x]){ //Top Right
-	minesAround++;
-	}
-	if (Tm == minenumbers[x]){ //Top Middle
-	minesAround++;
-	}
-	if (Bm == minenumbers[x]){ //Bottom Middle
-	minesAround++;
-	}
-	if (Br == minenumbers[x]){ //Bottom Right
-	minesAround++;
-	}
-	x++;
-}
-document.getElementById(attribute).innerHTML = minesAround;
-color();
-}else if (attribute < (userinput-1)){
-while (x < minenumbers.length){
-	if (Mr == minenumbers[x]){ //Middle Right
-	minesAround++;
-	}
-	if (Ml == minenumbers[x]){ //Middle Left
-	minesAround++;
-	}
-	if (Bl == minenumbers[x]){ //Bottom Left
-	minesAround++;
-	}
-	if (Bm == minenumbers[x]){ //Bottom Middle
-	minesAround++;
-	}
-	if (Br == minenumbers[x]){ //Bottom Right
-	minesAround++;
-	}
-	x++;
-}
-document.getElementById(attribute).innerHTML = minesAround;
-color();
-}else if ((attribute +1)%userinput == 0){
-while (x < minenumbers.length){
-	if (Tm == minenumbers[x]){ //Top Middle
-	minesAround++;
-	}
-	if (Tl == minenumbers[x]){ //Top Left
-	minesAround++;
-	}
-	if (Ml == minenumbers[x]){ //Middle Left
-	minesAround++;
-	}
-	if (Bl == minenumbers[x]){ //Bottom Left
-	minesAround++;
-	}
-	if (Bm == minenumbers[x]){ //Bottom Middle
-	minesAround++;
-	}
-	x++;
-}
-document.getElementById(attribute).innerHTML = minesAround;
-color();	
-}else{
-while (x < minenumbers.length){
-	if(Tm == minenumbers[x]){
-	minesAround++;
-	}
-	if(Tr == minenumbers[x]){
-	minesAround++;
-	}
-	if(Mr == minenumbers[x]){
-	minesAround++;
-	}
-	if(Ml == minenumbers[x]){
-	minesAround++;
-	}
-	if(Tl == minenumbers[x]){
-	minesAround++;
-	}
-	x++;
-	}
-document.getElementById(attribute).innerHTML = minesAround;
-color();
-}
-minesAround = 0;
-var final = 0;
-while(final < userinput*userinput){
-if(document.getElementById(final).innerHTML == "X"){
-  squares++;
-}
-final++;
-}
-if (squares == totalmines){alert("Yay! You won!");}
-document.getElementById("minesleft").innerHTML = "Mines Left: " + (totalmines-squares);
-}
-}
-function flag() { //This function is for flagging squares (WIP);
-alert("triggered!!");
-if (document.getElementById($(this).attr("id")).innerHTML != "X"){
-document.getElementById($(this).attr("id")).innerHTML = "X";
-}else{document.getElementById($(this).attr("id")).innerHTML = "+";}
-}
-function showmines() { //This function reveals all the mines once you lost
-if(document.getElementById(attribute).innerHTML == "X"){
-  document.getElementById(attribute).innerHTML = "+";
-  document.getElementById(attribute).style.color =  "gray";
-}else{
-  var show = 0;
-alert("You Lost");
-squares = 0;
-while (show < minenumbers.length){
-document.getElementById(minenumbers[show]).innerHTML = "☼";
-document.getElementById(minenumbers[show]).style.color = "white";
-document.getElementById(minenumbers[show]).style.backgroundColor = "red";
-show++; 
-}
-}
-}
-function lightsoff() { //This function toggles Dark Theme
-if(darktheme === false){
-darktheme = true
-document.body.style.backgroundColor = "#424242";
-}else
-{
-darktheme = false;
-document.body.style.backgroundColor = "white";
-}
-}
-function color() {
-  document.getElementById(attribute).style.backgroundColor = "white";
-if(minesAround == 0){
-	document.getElementById(attribute).style.color = "black";
-	document.getElementById(attribute).style.fontWeight = "bold";
-	}else if(minesAround == 1){
-	document.getElementById(attribute).style.color = "blue";
-	document.getElementById(attribute).style.fontWeight = "bold";
-	}else if(minesAround == 2){
-	document.getElementById(attribute).style.color = "green";
-	document.getElementById(attribute).style.fontWeight = "bold";
-	}else if(minesAround == 3){
-	document.getElementById(attribute).style.color = "lime"
-	document.getElementById(attribute).style.fontWeight = "bold";
-	}else if(minesAround == 4){
-	document.getElementById(attribute).style.color = "orange";
-	document.getElementById(attribute).style.fontWeight = "bold";
-	}else if(minesAround == 5){
-	document.getElementById(attribute).style.color = "red";
-	document.getElementById(attribute).style.fontWeight = "bold";
-	}else if(minesAround == 6){
-	document.getElementById(attribute).style.color = "brown";
-	document.getElementById(attribute).style.fontWeight = "bold";
-	}else if(minesAround == 7){
-	document.getElementById(attribute).style.color = "purple"
-	document.getElementById(attribute).style.fontWeight = "bold";
-	}else if(minesAround == 8){
-	document.getElementById(attribute).style.color = "gray";
-	document.getElementById(attribute).style.fontWeight = "bold";
-	}
-}
-function flagByAlert(){
-if(document.getElementById("flag").style.backgroundColor != "red"){
-document.getElementById("flag").style.backgroundColor = "red";
-flag = true;
-}else{
-document.getElementById("flag").style.backgroundColor = "white";
-flag = false;
-}
-var final = 0;
-squares = 0;
-while(final < userinput*userinput){
-if(document.getElementById(final).innerHTML == "X"){
-  squares++;
-}
-final++;
-}
-if (squares == totalmines){alert("Yay! You won!");}
-document.getElementById("minesleft").innerHTML = "Mines Left: " + (totalmines-squares);
-}
+"use strict";
+var CoinGeckoApi;
+(function (CoinGeckoApi) {
+    CoinGeckoApi["AllCoins"] = "coins/markets?vs_currency=usd&page=1&per_page=30&sparkline=false";
+    CoinGeckoApi["Base"] = "https://api.coingecko.com/api/v3";
+})(CoinGeckoApi || (CoinGeckoApi = {}));
+var RequestStatus;
+(function (RequestStatus) {
+    RequestStatus["Error"] = "Error";
+    RequestStatus["Idle"] = "Idle";
+    RequestStatus["Loading"] = "Loading";
+    RequestStatus["Success"] = "Success";
+})(RequestStatus || (RequestStatus = {}));
+var Color;
+(function (Color) {
+    Color["Green"] = "76, 175, 80";
+    Color["Red"] = "198, 40, 40";
+})(Color || (Color = {}));
+const CryptoUtility = {
+    formatPercent: (value) => {
+        return (value / 100).toLocaleString("en-US", { style: "percent", minimumFractionDigits: 2 });
+    },
+    formatUSD: (value) => {
+        return value.toLocaleString("en-US", { style: "currency", currency: "USD" });
+    },
+    getByID: (id, cryptos) => {
+        const match = cryptos.find((crypto) => crypto.id === id);
+        return match || null;
+    },
+    map: (data) => {
+        return {
+            change: data.price_change_percentage_24h,
+            id: data.id,
+            image: data.image,
+            marketCap: CryptoUtility.formatUSD(data.market_cap),
+            name: data.name,
+            price: CryptoUtility.formatUSD(data.current_price),
+            rank: data.market_cap_rank,
+            supply: data.circulating_supply.toLocaleString(),
+            symbol: data.symbol,
+            volume: CryptoUtility.formatUSD(data.total_volume)
+        };
+    },
+    mapAll: (data) => {
+        return data.map((item) => CryptoUtility.map(item));
+    }
+};
+const ChartUtility = {
+    draw: (id, points, change) => {
+        const canvas = document.getElementById(id);
+        if (canvas !== null) {
+            const context = canvas.getContext("2d");
+            const { clientHeight: height, clientWidth: width } = context.canvas;
+            context.stroke();
+            return new Chart(context, {
+                type: "line",
+                data: {
+                    datasets: [Object.assign({ data: points.map((point) => point.price) }, ChartUtility.getDatasetOptions(change))],
+                    labels: points.map((point) => point.timestamp)
+                },
+                options: ChartUtility.getOptions(points)
+            });
+        }
+    },
+    getDatasetOptions: (change) => {
+        const color = change >= 0 ? Color.Green : Color.Red;
+        return {
+            backgroundColor: "rgba(" + color + ", 0.1)",
+            borderColor: "rgba(" + color + ", 0.5)",
+            fill: true,
+            tension: 0.2,
+            pointRadius: 0
+        };
+    },
+    getOptions: (points) => {
+        const min = Math.min.apply(Math, points.map((point) => point.price)), max = Math.max.apply(Math, points.map((point) => point.price));
+        return {
+            maintainAspectRatio: false,
+            responsive: true,
+            scales: {
+                x: {
+                    display: false,
+                    gridLines: {
+                        display: false
+                    }
+                },
+                y: {
+                    display: false,
+                    gridLines: {
+                        display: false
+                    },
+                    suggestedMin: min * 0.98,
+                    suggestedMax: max * 1.02
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: false
+                }
+            }
+        };
+    },
+    getUrl: (id) => {
+        return `${CoinGeckoApi.Base}/coins/${id}/market_chart?vs_currency=usd&days=1`;
+    },
+    mapPoints: (data) => {
+        return data.prices.map((price) => ({
+            price: price[1],
+            timestamp: price[0]
+        }));
+    },
+    update: (chart, points, change) => {
+        chart.options = ChartUtility.getOptions(points);
+        const options = ChartUtility.getDatasetOptions(change);
+        chart.data.datasets[0].data = points.map((point) => point.price);
+        chart.data.datasets[0].backgroundColor = options.backgroundColor;
+        chart.data.datasets[0].borderColor = options.borderColor;
+        chart.data.datasets[0].pointRadius = options.pointRadius;
+        chart.data.labels = points.map((point) => point.timestamp);
+        chart.update();
+    }
+};
+/* ---------- Loading Component ---------- */
+const LoadingSpinner = () => {
+    return (React.createElement("div", { className: "loading-spinner-wrapper" },
+        React.createElement("div", { className: "loading-spinner" },
+            React.createElement("i", { className: "fa-regular fa-spinner-third" }))));
+};
+/* ---------- Crypto List Component ---------- */
+const CryptoListToggle = () => {
+    const { state, toggleList } = React.useContext(AppContext);
+    if (state.status === RequestStatus.Success && state.cryptos.length > 0) {
+        const classes = classNames("fa-regular", {
+            "fa-bars": !state.listToggled,
+            "fa-xmark": state.listToggled
+        });
+        return (React.createElement("button", { id: "crypto-list-toggle-button", onClick: () => toggleList(!state.listToggled) },
+            React.createElement("i", { className: classes })));
+    }
+    return null;
+};
+const CryptoListItem = (props) => {
+    const { state, selectCrypto } = React.useContext(AppContext);
+    const { crypto } = props;
+    const getClasses = () => {
+        const selected = state.selectedCrypto && state.selectedCrypto.id === crypto.id;
+        return classNames("crypto-list-item", {
+            selected
+        });
+    };
+    return (React.createElement("button", { type: "button", className: getClasses(), onClick: () => selectCrypto(crypto.id) },
+        React.createElement("div", { className: "crypto-list-item-background" },
+            React.createElement("h1", { className: "crypto-list-item-symbol" }, crypto.symbol),
+            React.createElement("img", { className: "crypto-list-item-background-image", src: crypto.image })),
+        React.createElement("div", { className: "crypto-list-item-content" },
+            React.createElement("h1", { className: "crypto-list-item-rank" }, crypto.rank),
+            React.createElement("img", { className: "crypto-list-item-image", src: crypto.image }),
+            React.createElement("div", { className: "crypto-list-item-details" },
+                React.createElement("h1", { className: "crypto-list-item-name" }, crypto.name),
+                React.createElement("h1", { className: "crypto-list-item-price" }, crypto.price)))));
+};
+const CryptoList = () => {
+    const { state } = React.useContext(AppContext);
+    if (state.status === RequestStatus.Success && state.cryptos.length > 0) {
+        const getItems = () => {
+            return state.cryptos.map((crypto) => (React.createElement(CryptoListItem, { key: crypto.id, crypto: crypto })));
+        };
+        return (React.createElement("div", { id: "crypto-list" }, getItems()));
+    }
+    return null;
+};
+const CryptoPriceChart = () => {
+    const { selectedCrypto: crypto } = React.useContext(AppContext).state;
+    const id = "crypto-price-chart";
+    const [state, setStateTo] = React.useState({
+        chart: null,
+        points: [],
+        status: RequestStatus.Loading
+    });
+    const setStatusTo = (status) => {
+        setStateTo(Object.assign(Object.assign({}, state), { status }));
+    };
+    const setChartTo = (chart) => {
+        setStateTo(Object.assign(Object.assign({}, state), { chart }));
+    };
+    React.useEffect(() => {
+        const fetch = async () => {
+            try {
+                setStatusTo(RequestStatus.Loading);
+                const res = await axios.get(ChartUtility.getUrl(crypto.id));
+                setStateTo(Object.assign(Object.assign({}, state), { points: ChartUtility.mapPoints(res.data), status: RequestStatus.Success }));
+            }
+            catch (err) {
+                console.error(err);
+                setStatusTo(RequestStatus.Error);
+            }
+        };
+        fetch();
+    }, [crypto]);
+    React.useEffect(() => {
+        if (state.chart === null && state.status === RequestStatus.Success) {
+            setChartTo(ChartUtility.draw(id, state.points, crypto.change));
+        }
+    }, [state.status]);
+    React.useEffect(() => {
+        if (state.chart !== null) {
+            const update = () => ChartUtility.update(state.chart, state.points, crypto.change);
+            update();
+        }
+    }, [state.chart, state.points]);
+    const getLoadingSpinner = () => {
+        if (state.status === RequestStatus.Loading) {
+            return (React.createElement("div", { id: "crypto-price-chart-loading-spinner" },
+                React.createElement(LoadingSpinner, null)));
+        }
+    };
+    return (React.createElement("div", { id: "crypto-price-chart-wrapper" },
+        React.createElement("canvas", { id: id }),
+        getLoadingSpinner()));
+};
+const CryptoField = (props) => {
+    return (React.createElement("div", { className: classNames("crypto-field", props.className) },
+        React.createElement("h1", { className: "crypto-field-value" }, props.value),
+        React.createElement("h1", { className: "crypto-field-label" }, props.label)));
+};
+const CryptoDetails = () => {
+    const { selectedCrypto } = React.useContext(AppContext).state;
+    const [state, setStateTo] = React.useState({
+        crypto: null,
+        transitioning: true
+    });
+    const setTransitioningTo = (transitioning) => {
+        setStateTo(Object.assign(Object.assign({}, state), { transitioning }));
+    };
+    const { crypto } = state;
+    React.useEffect(() => {
+        if (selectedCrypto !== null) {
+            setTransitioningTo(true);
+            const timeout = setTimeout(() => {
+                setStateTo({ crypto: selectedCrypto, transitioning: false });
+            }, 500);
+            return () => {
+                clearTimeout(timeout);
+            };
+        }
+    }, [selectedCrypto]);
+    if (crypto !== null) {
+        const sign = crypto.change >= 0 ? "positive" : "negative";
+        return (React.createElement("div", { id: "crypto-details", className: classNames(sign, { transitioning: state.transitioning }) },
+            React.createElement("div", { id: "crypto-details-content" },
+                React.createElement("div", { id: "crypto-fields" },
+                    React.createElement(CryptoField, { label: "Rank", value: crypto.rank }),
+                    React.createElement(CryptoField, { label: "Name", value: crypto.name }),
+                    React.createElement(CryptoField, { label: "Price", value: crypto.price }),
+                    React.createElement(CryptoField, { label: "Market Cap", value: crypto.marketCap }),
+                    React.createElement(CryptoField, { label: "24H Volume", value: crypto.volume }),
+                    React.createElement(CryptoField, { label: "Circulating Supply", value: crypto.supply }),
+                    React.createElement(CryptoField, { className: sign, label: "24H Change", value: CryptoUtility.formatPercent(crypto.change) })),
+                React.createElement(CryptoPriceChart, null),
+                React.createElement("h1", { id: "crypto-details-symbol" }, crypto.symbol))));
+    }
+    return null;
+};
+const AppContext = React.createContext(null);
+const App = () => {
+    const [state, setStateTo] = React.useState({
+        cryptos: [],
+        listToggled: true,
+        selectedCrypto: null,
+        status: RequestStatus.Loading
+    });
+    const setStatusTo = (status) => {
+        setStateTo(Object.assign(Object.assign({}, state), { status }));
+    };
+    const selectCrypto = (id) => {
+        setStateTo(Object.assign(Object.assign({}, state), { listToggled: window.innerWidth > 800, selectedCrypto: CryptoUtility.getByID(id, state.cryptos) }));
+    };
+    const toggleList = (listToggled) => {
+        setStateTo(Object.assign(Object.assign({}, state), { listToggled }));
+    };
+    React.useEffect(() => {
+        const fetch = async () => {
+            try {
+                setStatusTo(RequestStatus.Loading);
+                const res = await axios.get(`${CoinGeckoApi.Base}/${CoinGeckoApi.AllCoins}`);
+                setStateTo(Object.assign(Object.assign({}, state), { cryptos: CryptoUtility.mapAll(res.data), status: RequestStatus.Success }));
+            }
+            catch (err) {
+                console.error(err);
+                setStatusTo(RequestStatus.Error);
+            }
+        };
+        fetch();
+    }, []);
+    React.useEffect(() => {
+        if (state.status === RequestStatus.Success && state.cryptos.length > 0) {
+            selectCrypto(state.cryptos[0].id);
+        }
+    }, [state.status]);
+    const getLoadingSpinner = () => {
+        if (state.status === RequestStatus.Loading) {
+            return (React.createElement(LoadingSpinner, null));
+        }
+    };
+    return (React.createElement(AppContext.Provider, { value: { state, selectCrypto, setStateTo, toggleList } },
+        React.createElement("div", { id: "app", className: classNames({ "list-toggled": state.listToggled }) },
+            React.createElement(CryptoList, null),
+            React.createElement(CryptoDetails, null),
+            React.createElement(CryptoListToggle, null),
+            getLoadingSpinner())));
+};
+ReactDOM.render(React.createElement(App, null), document.getElementById("root"));
