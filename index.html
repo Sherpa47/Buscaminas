@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" >
+<html lang="en" >
 <head>
   <meta charset="UTF-8">
   <title>CodePen - Minesweeper</title>
@@ -8,35 +8,64 @@
 </head>
 <body>
 <!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html>
 <head>
-  
-<title>Minesweeper</title>
-  
-<h1>Buscaminas</h1>
-  
-<b>Número de minas: </b>
-  
-<input id="minesinput" placeholder="Minas" type="number" min = "1">
-  <br class="st">
-  <br class="st">
-<b>Número de filas y columnas: </b> <input id="userinput" placeholder="Filas y columnas" type="number" min = "5"> 
-  <br class="st">
-  <br class="st">
-<button id="go" class="stationary">Iniciar Juego </button>
-  <br class="st">
-  <br class="st">
-<button id="darktheme" class="stationary">Tema Oscuro</button>
-  
-<br class="st"><br class="st"><button id="flag" class="stationary" accesskey="f">Flag</button><br><p id="minesleft">Mines Marcadas: --</p>
-  
-<hr>
-  
 </head>
 <body>
-  
-<div id="wrapper"></div>
+  <div id="title">
+    <div id="title_text">
+      <div id="title_name">Minesweeper</div>
+      <div id="title_author">Made by T.D</div>
+    </div>
+    <div id="custom_setting">
+      <div id="custom_left">
+        <div class="custom_text" id="custom_row_text"></div>
+        <input required type="number" class="custom_input" id="custom_row">
+        <div class="custom_text" id="custom_column_text"></div>
+        <input required type="number" class="custom_input" id="custom_column">
+        <div class="custom_text" id="custom_mine_text"></div>
+        <input required type="number" class="custom_input" id="custom_mine">
+      </div>
+      <div id="custom_right">
+        <button type="button" id="custom_random">Random</button>
+        <br>
+        <button type="button" id="custom_start">Start</button>
+        <br>
+        <span id="custom_mine_probability_text"></span>
+      </div>
+    </div>
+    <div id="difficulty_parent">
+      <button type="button" class="difficulty" id="easy">Easy</button>
+      <button type="button" class="difficulty" id="normal">Normal</button>
+      <button type="button" class="difficulty" id="hard">Hard</button>
+      <button type="button" class="difficulty" id="lunatic">Lunatic</button>
+      <button type="button" class="difficulty" id="custom">Custom</button>
+    </div>
+  </div>
+  <div id="game">
+    <div id="status_area">
+      <span class="status_text" id="timer_text"></span>
+      <span class="status_text" id="flag_text"></span>
+      <span class="status_text" id="mine_probability_text"></span>
+      <button type="button" id="restart_game">ReStart</button>
+      <button type="button" id="quit_game">Quit</button>
+    </div>
+    <div id="game_table_frame">
+      <table id="game_table"></table>
+      <div id="win_frame">
+        <div id="win_text">
+          Congratulations!!
+          <br>
+          <button type="button" id="tweet">Tweet</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
 <!-- partial -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script><script  src="./script.js"></script>
+  <script  src="./script.js"></script>
 
 </body>
 </html>
