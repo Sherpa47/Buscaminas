@@ -9,15 +9,31 @@
 <body>
 <!-- partial:index.partial.html -->
 <head>
+  
 <title>Minesweeper</title>
+  
 <h1>Buscaminas</h1>
+  
 <b>Number of mines: </b>
-<input id="minesinput" placeholder="Mines" type="number" min = "1"><br class="st"><br class="st">
-<b>Number of rows and collumns: </b> <input id="userinput" placeholder="Rows and Collumns of squares" type="number" min = "5"> 
-<br class="st"><br class="st"><button id="go" class="stationary">Start Game</button> <button id="darktheme" class="stationary">Dark Theme</button>
-<br class="st"><br class="st"><button id="flag" class="stationary" accesskey="f">Flag</button><br><p id="minesleft">Mines Left: --</p><hr>
+  
+<input id="minesinput" placeholder="Minas" type="number" min = "1">
+  <br class="st">
+  <br class="st">
+<b>Número de filas y columnas: </b> <input id="userinput" placeholder="Filas y columnas" type="number" min = "5"> 
+  <br class="st">
+  <br class="st">
+<button id="go" class="stationary">Iniciar Juego </button>
+  <br class="st">
+  <br class="st">
+<button id="darktheme" class="stationary">Tema Oscuro</button>
+  
+<br class="st"><br class="st"><button id="flag" class="stationary" accesskey="f">Flag</button><br><p id="minesleft">Mines Marcadas: --</p>
+  
+<hr>
+  
 </head>
 <body>
+  
 <div id="wrapper"></div>
 <!-- partial -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script><script  src="./script.js"></script>
