@@ -45,9 +45,3 @@ b{
   font-size: 0.6em;
   font-weight: bold;
 }
- 
-input::placeholder {
-  color: grey;
-  font-size: 0.6em;
-  font-style: italic;
-}  
