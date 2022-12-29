@@ -62,7 +62,7 @@ button.difficulty {
 
 #custom_setting {
   display: none;
-  width: auto;
+  width: 99vw;
   text-align: center;
   background: grey;
 }
