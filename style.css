@@ -134,14 +134,14 @@ span.status_text {
 
 #restart_game {
   font-size: 25px;
-  border-radius: 10%;
-  background: limegreen;
+  border-radius: 15%;
+  background: yellow;
 }
 
 #quit_game {
   font-size: 25px;
-  border-radius: 10%;
-  background: violet;
+  border-radius: 15%;
+  background: red;
 }
 
 #game_table_frame {
