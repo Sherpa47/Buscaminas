@@ -61,6 +61,7 @@ button.difficulty {
   display: none;
   width: 99vw;
   text-align: center;
+  background: grey;
 }
 
 #custom_left {
@@ -107,7 +108,7 @@ input.custom_input {
 
 #game {
   display: none;
-  width: 50vw;
+  width: 100vw;
   text-align: center;
 }
 
@@ -216,10 +217,4 @@ td.aroundMines8 {
   -webkit-text-stroke: 2px white;
   text-align: center;
   margin-top: 30px;
-}
-
-#tweet {
-  font-size: 50px;
-  border-radius: 10%;
-  background: deepskyblue;
 }
