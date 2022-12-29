@@ -29,11 +29,11 @@ body {
 }
 
 button.difficulty {
-  width: 147px;
+  width: auto;
   height: 50px;
   color: white;
   -webkit-text-stroke: 1px black;
-  font-size: 35px;
+  font-size: 15px;
 }
 
 #easy {
