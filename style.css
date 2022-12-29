@@ -1,6 +1,7 @@
 body {
   cursor: default;
   font-family: Meiryo;
+  background: #0FFFFF;
 }
 
 #title_text {
@@ -59,7 +60,7 @@ button.difficulty {
 
 #custom_setting {
   display: none;
-  width: 99vw;
+  width: 105vw;
   text-align: center;
   background: grey;
 }
