@@ -9,7 +9,7 @@ body {
 }
 
 #title_name {
-  font-size: 40px;
+  font-size: 100px;
   font-style: italic;
   text-align: center;
 }
@@ -29,11 +29,11 @@ body {
 }
 
 button.difficulty {
-  width: auto;
+  width: 147px;
   height: 50px;
   color: white;
   -webkit-text-stroke: 1px black;
-  font-size: 15px;
+  font-size: 35px;
 }
 
 #easy {
