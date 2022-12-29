@@ -4,6 +4,13 @@ body {
   background: #222222;
 }
 
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
 #title_text {
   margin-top: 100px;
   margin-bottom: 100px;
