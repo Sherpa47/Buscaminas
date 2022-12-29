@@ -54,7 +54,7 @@ button.difficulty {
 
 #custom_setting {
   display: none;
-  width: 50vh;
+  width: 25vh;
   text-align: center;
   background: grey;
 }
@@ -65,11 +65,11 @@ button.difficulty {
 
 #custom_right {
   display: inline-block;
-  margin-left: 50px;
+  margin-left: 25px;
 }
 
 div.custom_text {
-  margin-left: 50px;
+  margin-left: 25px;
   margin-top: 10px;
   margin-bottom: 10px;
   font-size: 15px;
