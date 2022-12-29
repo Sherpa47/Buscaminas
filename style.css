@@ -11,6 +11,21 @@ img {
   width: 50%;
 }
 
+a.popup-cerrar {
+	background: #f00;
+  border-radius:3px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 999;
+  line-height: 28px;
+  position: absolute;
+  right: 5px;   
+  text-align: center;
+  text-decoration: none;
+  top: 5px;
+  width: 22px;
+ }
+
 #title_text {
   margin-top: 10px;
   margin-bottom: 100px;
