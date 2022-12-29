@@ -161,12 +161,12 @@ table {
 }
 
 td {
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   border: 1px black solid;
   font-size: 16px;
   text-align: center;
-  background: cyan;
+  background: #85A916;
 }
 
 td.noMine {
