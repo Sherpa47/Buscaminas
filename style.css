@@ -1,7 +1,7 @@
 body {
   cursor: default;
   font-family: Meiryo;
-  background: #000000;
+  background: #222222;
 }
 
 #title_text {
@@ -13,6 +13,7 @@ body {
   font-size: 40px;
   font-style: italic;
   text-align: center;
+  color: white;
 }
 
 #difficulty_parent {
@@ -53,7 +54,7 @@ button.difficulty {
 
 #custom_setting {
   display: none;
-  width: 105vw;
+  width: auto;
   text-align: center;
   background: grey;
 }
