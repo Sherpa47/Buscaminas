@@ -12,13 +12,13 @@ img {
 }
 
 a.popup-cerrar {
-	background: #f00;
+  background: #f00;
   border-radius:3px;
   color: #fff;
   font-size: 20px;
   font-weight: 999;
   line-height: 28px;
-  position: absolute;
+  position: relative;
   right: 5px;   
   text-align: center;
   text-decoration: none;
