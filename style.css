@@ -97,11 +97,11 @@ button.difficulty {
 
 #custom_right {
   display: inline-block;
-  margin-left: 5px;
+  margin-left: 25px;
 }
 
 div.custom_text {
-  margin-left: 5px;
+  margin-left: 25px;
   margin-top: 10px;
   margin-bottom: 10px;
   font-size: 15px;
