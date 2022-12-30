@@ -13,7 +13,7 @@ img {
 }
 
 a.popup-cerrar {
-  background: #000;
+  background: #F00;
   border-radius:3px;
   color: #fff;
   font-size: 15px;
@@ -118,13 +118,13 @@ input.custom_input {
 }
 
 #custom_random {
-  margin-bottom: 80px;
+  margin-bottom: 75px;
   font-size: 15px;
   background: orange;
 }
 
 #custom_start {
-  margin-bottom: 60px;
+  margin-bottom: 65px;
   font-size: 15px;
   border-radius: 10%;
   color: black;
