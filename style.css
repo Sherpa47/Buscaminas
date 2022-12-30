@@ -13,7 +13,7 @@ img {
 }
 
 a.popup-cerrar {
-  background: #FF0;
+  background: #222;
   border-radius:3px;
   color: #fff;
   font-size: 15px;
@@ -84,11 +84,12 @@ button.difficulty {
 
 #custom_setting {
   display: none;
-  width: 99vw;
+  width: 80vw;
+  height: 90hw;
   text-align: center;
   background: #F4F3CF;
   margin: 0 auto;
-  padding: 5px 3px;
+  padding: 5px 0px;
 }
 
 #custom_left {
