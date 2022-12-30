@@ -128,7 +128,7 @@ input.custom_input {
   font-size: 15px;
   border-radius: 10%;
   color: black;
-  -webkit-text-stroke: 1px white;
+  -webkit-text-stroke: 1px black;
   background: limegreen;
 }
 
