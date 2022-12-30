@@ -13,7 +13,7 @@ img {
 }
 
 a.popup-cerrar {
-  background: #F00;
+  background: #000;
   border-radius:3px;
   color: #fff;
   font-size: 15px;
@@ -110,7 +110,7 @@ div.custom_text {
 }
 
 input.custom_input {
-  margin-top: 30px;
+  margin-top: 10px;
   margin-left: 100px;
   font-size: 15px;
 }
