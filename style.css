@@ -1,6 +1,7 @@
 body {
   cursor: default;
   font-family: Meiryo;
+  width: auto;
   background: #222222;
 }
 
@@ -12,7 +13,7 @@ img {
 }
 
 a.popup-cerrar {
-  background: #FF0;
+  background: #F00;
   border-radius:3px;
   color: #fff;
   font-size: 15px;
